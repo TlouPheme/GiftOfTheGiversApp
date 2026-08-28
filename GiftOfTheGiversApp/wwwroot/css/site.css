@@ -1,0 +1,113 @@
+:root {
+  --gotg-green: #0b6b3a;
+  --gotg-green-dark: #08492a;
+  --gotg-sand: #d4a017;
+  --gotg-cream: #f6f3ea;
+}
+
+html {
+  height: auto;
+  min-height: 100%;
+  position: static;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  background: var(--gotg-cream);
+}
+
+/* Full-viewport page shell so the footer sits at the bottom on short pages
+   and after the content on long pages. Identity CSS must not take over. */
+.gotg-frame {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.gotg-frame-main {
+  min-width: 0;
+  width: 100%;
+}
+
+.gotg-nav {
+  background: var(--gotg-green-dark);
+}
+
+.gotg-hero {
+  background: var(--gotg-green-dark);
+  color: #fff;
+}
+
+/* Cards inside the dark hero must not inherit white text. */
+.gotg-hero .card {
+  color: #143326;
+  background: #fff;
+}
+
+.gotg-hero .stat-label {
+  color: #3d5c4c;
+}
+
+.gotg-hero .stat-value {
+  color: #08492a;
+}
+
+.gotg-footer {
+  width: 100%;
+  background: var(--gotg-green-dark);
+  color: #fff;
+}
+
+.btn-gotg {
+  background: var(--gotg-green);
+  border-color: var(--gotg-green);
+  color: #fff;
+}
+
+.btn-gotg:hover {
+  background: var(--gotg-green-dark);
+  color: #fff;
+}
+
+.stat-box {
+  background: #f3f6f2;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1rem;
+}
+
+.incidents-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.incidents-toolbar-copy {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.incidents-toolbar-action {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.aid-tag {
+  display: inline-block;
+  margin: 0 0.35rem 0.35rem 0;
+  padding: 0.28em 0.7em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #08492a;
+  background: #e7f3eb;
+  border: 1px solid #9fc5ad;
+  border-radius: 999px;
+  white-space: nowrap;
+}

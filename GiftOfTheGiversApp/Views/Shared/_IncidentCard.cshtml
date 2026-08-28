@@ -1,0 +1,35 @@
+@model GiftOfTheGiversApp.Models.Incident
+@{
+    var aid = (Model.RequiredAid ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+    var showClose = ViewData["ShowIncidentClose"] as bool? == true
+        && Model.IsActive
+        && User.Identity?.IsAuthenticated == true;
+}
+<div class="card h-100 shadow-sm d-flex flex-column">
+    <div class="card-body flex-grow-1">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+            <h3 class="h5 mb-0 text-break">@Model.Title</h3>
+            <span class="badge flex-shrink-0 @(Model.IsActive ? "bg-success" : "bg-secondary")">@(Model.IsActive ? "Active" : "Closed")</span>
+        </div>
+        <p class="text-muted small mb-2 mt-2">@Model.Location</p>
+        <p class="small">@Model.Description</p>
+        <p class="small text-muted mb-2">
+            Started @Model.StartDate.ToString("d MMM yyyy")
+            @(Model.EndDate is DateTime end ? $" · Ended {end:d MMM yyyy}" : " · Ongoing")
+        </p>
+        <div class="d-flex flex-wrap">
+            @foreach (var item in aid)
+            {
+                <span class="aid-tag">@item</span>
+            }
+        </div>
+    </div>
+    @if (showClose)
+    {
+        <div class="card-footer bg-white">
+            <form asp-controller="Incidents" asp-action="Close" asp-route-id="@Model.Id" method="post" class="m-0">
+                <button class="btn btn-sm btn-outline-secondary" type="submit">Close incident</button>
+            </form>
+        </div>
+    }
+</div>

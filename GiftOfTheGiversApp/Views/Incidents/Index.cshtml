@@ -1,0 +1,54 @@
+@model IEnumerable<Incident>
+@{
+    ViewData["Title"] = "Incidents";
+    ViewData["ShowIncidentClose"] = true;
+    var active = Model.Where(i => i.IsActive).ToList();
+    var closed = Model.Where(i => !i.IsActive).ToList();
+}
+
+<div class="container py-4">
+    <div class="incidents-toolbar">
+        <div class="incidents-toolbar-copy">
+            <h1>Incidents</h1>
+            <p class="text-muted mb-0">The public list shows every disaster currently being served, plus closed incidents kept for accountability.</p>
+        </div>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <a class="btn btn-gotg incidents-toolbar-action" asp-action="Create">Log a disaster</a>
+        }
+    </div>
+
+    <h2 class="h4 mt-4">Currently active</h2>
+    @if (!active.Any())
+    {
+        <p class="text-muted">No active incidents are on the board.</p>
+    }
+    else
+    {
+        <div class="row g-3 align-items-stretch">
+            @foreach (var incident in active)
+            {
+                <div class="col-md-6">
+                    <partial name="_IncidentCard" model="incident" />
+                </div>
+            }
+        </div>
+    }
+
+    <h2 class="h4 mt-4">Closed incidents</h2>
+    @if (!closed.Any())
+    {
+        <p class="text-muted">No closed incidents yet.</p>
+    }
+    else
+    {
+        <div class="row g-3 align-items-stretch">
+            @foreach (var incident in closed)
+            {
+                <div class="col-md-6">
+                    <partial name="_IncidentCard" model="incident" />
+                </div>
+            }
+        </div>
+    }
+</div>

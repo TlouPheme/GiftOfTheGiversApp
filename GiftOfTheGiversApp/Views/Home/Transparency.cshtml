@@ -1,0 +1,65 @@
+@model TransparencyViewModel
+@{
+    ViewData["Title"] = "Public totals";
+}
+
+<div class="container py-4">
+    <h1>Public totals</h1>
+    <p class="text-muted">Anyone can open this page without signing in. It shows total money received, total goods received, and currently active incidents.</p>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card"><div class="card-body">
+                <div class="small text-muted">Money received</div>
+                <div class="display-6">R @Model.MoneyTotal.ToString("N0")</div>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card"><div class="card-body">
+                <div class="small text-muted">Goods received</div>
+                <div class="display-6">@Model.GoodsTotal.ToString("N0") items</div>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card"><div class="card-body">
+                <div class="small text-muted">Active incidents</div>
+                <div class="display-6">@Model.ActiveIncidents.Count</div>
+            </div></div>
+        </div>
+    </div>
+
+    <h2 class="h4 mt-4">Goods by category</h2>
+    <div class="row g-3">
+        @foreach (var row in Model.GoodsByCategory)
+        {
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body d-flex justify-content-between">
+                        <div>
+                            <div class="fw-semibold">@row.Name</div>
+                            <div class="small text-muted">@row.Description</div>
+                        </div>
+                        <div class="fw-semibold">@row.ItemCount</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <h2 class="h4 mt-4">Currently active disasters</h2>
+    @if (!Model.ActiveIncidents.Any())
+    {
+        <p class="text-muted">No active incidents. When staff log a new disaster it will appear here.</p>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var incident in Model.ActiveIncidents)
+            {
+                <div class="col-md-6">
+                    <partial name="_IncidentCard" model="incident" />
+                </div>
+            }
+        </div>
+    }
+</div>

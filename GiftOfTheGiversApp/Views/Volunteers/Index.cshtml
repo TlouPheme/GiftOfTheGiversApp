@@ -1,0 +1,30 @@
+@model IEnumerable<VolunteerApplication>
+@{
+    ViewData["Title"] = "Volunteer applications";
+}
+
+<div class="container py-4">
+    <h1>Volunteer applications</h1>
+    @if (!Model.Any())
+    {
+        <p class="text-muted">No volunteer applications yet.</p>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var v in Model)
+            {
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="h6 mb-1">@v.FullName</h2>
+                            <p class="small text-muted mb-2">@v.City · @v.Phone @(string.IsNullOrWhiteSpace(v.Email) ? "" : "· " + v.Email)</p>
+                            <p class="mb-1">@(v.Skills ?? "Skills not listed")</p>
+                            <p class="small text-muted mb-0">Availability: @(v.Availability ?? "Not specified")</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

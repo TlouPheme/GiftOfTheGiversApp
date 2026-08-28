@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(ViewData["Title"] ?? "Home") · Gift of the Givers</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GiftOfTheGiversApp.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="gotg-frame">
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark gotg-nav">
+                <div class="container">
+                    <a class="navbar-brand fw-semibold" asp-controller="Home" asp-action="Index">Gift of the Givers</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse" id="mainNav">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Incidents" asp-action="Index">Incidents</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Donations" asp-action="Create">Donate</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Volunteers" asp-action="Create">Volunteer</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Transparency">Public totals</a></li>
+                        </ul>
+                        <a class="btn btn-warning btn-sm me-2" asp-controller="Operations" asp-action="Index">Staff desk</a>
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="gotg-frame-banner">
+            @if (TempData["Status"] is string status)
+            {
+                <div class="container mt-3">
+                    <div class="alert alert-success" role="alert">@status</div>
+                </div>
+            }
+        </div>
+
+        <main role="main" class="gotg-frame-main">
+            @RenderBody()
+        </main>
+
+        <footer class="gotg-footer">
+            <div class="container py-4">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <p class="fw-semibold mb-1">Gift of the Givers Foundation</p>
+                        <p class="small mb-0 opacity-75">Largest disaster response NGO of African origin on the African continent. Prototype for APPR6312 Part 1, Section C.</p>
+                    </div>
+                    <div class="col-md-4 small">
+                        <p class="fw-semibold mb-1">National call centre</p>
+                        <p class="mb-0">Toll free: 0800 786 911</p>
+                        <p class="mb-0">Email: info@giftofthegivers.org</p>
+                        <p class="mb-0">NPO 032-031 · PBO 930018993</p>
+                    </div>
+                    <div class="col-md-4 small">
+                        <p class="fw-semibold mb-1">Public access</p>
+                        <a class="d-block link-light" asp-controller="Home" asp-action="Transparency">Incoming donation totals</a>
+                        <a class="d-block link-light" asp-controller="Incidents" asp-action="Index">Active incidents</a>
+                        <a class="d-block link-light" asp-area="Identity" asp-page="/Account/Login">Staff sign-in</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

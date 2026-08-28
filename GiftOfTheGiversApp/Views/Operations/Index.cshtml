@@ -1,0 +1,58 @@
+@{
+    ViewData["Title"] = "Operations desk";
+}
+
+<div class="container py-4">
+    <h1>Operations desk</h1>
+    <p class="text-muted">Signed in as @User.Identity?.Name. Capture incidents, review incoming gifts and define new goods categories.</p>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3"><div class="card"><div class="card-body"><div class="small text-muted">Money in</div><div class="fs-4">R @(((decimal)ViewBag.MoneyTotal).ToString("N0"))</div></div></div></div>
+        <div class="col-md-3"><div class="card"><div class="card-body"><div class="small text-muted">Goods items</div><div class="fs-4">@ViewBag.GoodsTotal</div></div></div></div>
+        <div class="col-md-3"><div class="card"><div class="card-body"><div class="small text-muted">Active incidents</div><div class="fs-4">@ViewBag.ActiveIncidents</div></div></div></div>
+        <div class="col-md-3"><div class="card"><div class="card-body"><div class="small text-muted">Volunteers</div><div class="fs-4">@ViewBag.Volunteers</div></div></div></div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a class="card text-decoration-none text-dark h-100" asp-controller="Incidents" asp-action="Create">
+                <div class="card-body">
+                    <h2 class="h5">Log a disaster</h2>
+                    <p class="small text-muted mb-0">Start date, location, description and required aid.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="card text-decoration-none text-dark h-100" asp-controller="Donations" asp-action="Index">
+                <div class="card-body">
+                    <h2 class="h5">Review donations</h2>
+                    <p class="small text-muted mb-0">Named and anonymous money and goods gifts.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="card text-decoration-none text-dark h-100" asp-controller="Categories" asp-action="Index">
+                <div class="card-body">
+                    <h2 class="h5">Goods categories</h2>
+                    <p class="small text-muted mb-0">Add new categories beyond food, water and clothing.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="card text-decoration-none text-dark h-100" asp-controller="Volunteers" asp-action="Index">
+                <div class="card-body">
+                    <h2 class="h5">Volunteers</h2>
+                    <p class="small text-muted mb-0">Applications waiting for a field call-up.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="card text-decoration-none text-dark h-100" asp-controller="Incidents" asp-action="Index">
+                <div class="card-body">
+                    <h2 class="h5">Close an incident</h2>
+                    <p class="small text-muted mb-0">Mark a disaster closed when the response ends.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

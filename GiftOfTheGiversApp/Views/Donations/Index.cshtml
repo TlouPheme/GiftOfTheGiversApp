@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Incoming donations";
+    var money = (IEnumerable<MonetaryDonation>)ViewBag.Money;
+    var goods = (IEnumerable<GoodsDonation>)ViewBag.Goods;
+}
+
+<div class="container py-4">
+    <h1>Incoming donations</h1>
+    <p class="text-muted">Staff view of every monetary and goods gift captured by the public.</p>
+
+    <h2 class="h4 mt-4">Money</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead><tr><th>Date</th><th>Amount</th><th>Donor</th><th>Message</th></tr></thead>
+            <tbody>
+            @foreach (var d in money)
+            {
+                <tr>
+                    <td>@d.DonationDate.ToString("d MMM yyyy")</td>
+                    <td>R @d.AmountZar.ToString("N0")</td>
+                    <td>@d.DisplayName</td>
+                    <td>@(d.Message ?? "—")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="h4 mt-4">Goods</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead><tr><th>Date</th><th>Items</th><th>Category</th><th>Donor</th><th>Description</th></tr></thead>
+            <tbody>
+            @foreach (var d in goods)
+            {
+                <tr>
+                    <td>@d.DonationDate.ToString("d MMM yyyy")</td>
+                    <td>@d.ItemCount</td>
+                    <td>@(d.Category?.Name ?? "Unknown")</td>
+                    <td>@d.DisplayName</td>
+                    <td>@d.Description</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
