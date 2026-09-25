@@ -32,7 +32,7 @@ public class VolunteersController : Controller
         volunteer.SubmittedAt = DateTime.UtcNow;
         _db.VolunteerApplications.Add(volunteer);
         await _db.SaveChangesAsync();
-        TempData["Status"] = "Volunteer application captured. Operations staff can see your skills and availability on the desk.";
+        TempData["Status"] = "Volunteer application captured. Operations staff can see your skills, availability, and contact details.";
         return RedirectToAction(nameof(Create));
     }
 
