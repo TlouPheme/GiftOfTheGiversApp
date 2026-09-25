@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.30" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.30" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.30" />
+	<PackageReference Include="GiftOfTheGivers.Helpers" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

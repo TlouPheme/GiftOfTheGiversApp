@@ -4,6 +4,7 @@ using GiftOfTheGiversApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using GiftOfTheGivers.Helpers;
 
 namespace GiftOfTheGiversApp.Controllers;
 
@@ -43,9 +44,20 @@ public class DonationsController : Controller
 
         _db.MonetaryDonations.Add(money);
         await _db.SaveChangesAsync();
+        var certificateNumber = DonationHelper.FormatCertificateNumber(money.Id, money.DonationDate);
+        using var http = new HttpClient();
+        var url =
+            "http://localhost:7264/api/GenerateTaxCertificate" +
+            $"?donationId={money.Id}" +
+            $"&amount={money.AmountZar.ToString(System.Globalization.CultureInfo.InvariantCulture)}" +
+            $"&donorName={Uri.EscapeDataString(money.DonorName ?? "")}" +
+            $"&anonymous={money.IsAnonymous.ToString().ToLowerInvariant()}";
+        var json = await http.GetStringAsync(url);
+        using var doc = System.Text.Json.JsonDocument.Parse(json);
+        certificateNumber = doc.RootElement.GetProperty("certificateNumber").GetString() ?? certificateNumber;
         TempData["Status"] = money.IsAnonymous
-            ? "Anonymous monetary donation captured. Thank you."
-            : $"Thank you, {money.DonorName}. Your monetary donation has been captured.";
+            ? $"Anonymous monetary donation captured. Thank you. Tax certificate: {certificateNumber}."
+            : $"Thank you, {money.DonorName}. Your monetary donation has been captured. Tax certificate: {certificateNumber}.";
         return RedirectToAction(nameof(Create), new { tab = "money" });
     }
 
