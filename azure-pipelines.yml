@@ -22,7 +22,7 @@ steps:
     command: restore
     projects: '**/*.sln'
     feedsToUse: select
-    vstsFeed: giftofthegivers
+    vstsFeed: '9b88a48d-092a-4829-858d-b77799a019d6/giftofthegivers'
 
 - task: DotNetCoreCLI@2
   displayName: Build
