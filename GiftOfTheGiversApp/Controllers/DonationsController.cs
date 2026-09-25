@@ -57,7 +57,7 @@ public class DonationsController : Controller
         certificateNumber = doc.RootElement.GetProperty("certificateNumber").GetString() ?? certificateNumber;
         TempData["Status"] = money.IsAnonymous
             ? $"Anonymous monetary donation captured. Thank you. Tax certificate: {certificateNumber}."
-            : $"Thank you, {money.DonorName}. Your monetary donation has been captured. Tax certificate: {certificateNumber}.";
+            : $"Thank you, {money.DonorName}. Your monetary donation has been captured. Your tax certificate number is {certificateNumber}.";
         return RedirectToAction(nameof(Create), new { tab = "money" });
     }
 
