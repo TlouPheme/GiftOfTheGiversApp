@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "gotg-web",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "GiftOfTheGiversApp", "--launch-profile", "http"],
+      "port": 43127
+    }
+  ]
+}
