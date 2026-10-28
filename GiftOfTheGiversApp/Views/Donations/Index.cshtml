@@ -4,44 +4,53 @@
     var goods = (IEnumerable<GoodsDonation>)ViewBag.Goods;
 }
 
-<div class="container py-4">
-    <h1>Incoming donations</h1>
-    <p class="text-muted">Staff view of every monetary and goods gift captured by the public.</p>
+<section class="page-hero">
+    <div class="container">
+        <a class="small text-white-50 text-decoration-none d-inline-block mb-3" asp-controller="Operations" asp-action="Index"><i class="bi bi-arrow-left me-1"></i>Operations desk</a>
+        <h1>Incoming donations</h1>
+        <p>Staff view of every monetary and goods gift captured by the public.</p>
+    </div>
+</section>
 
-    <h2 class="h4 mt-4">Money</h2>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead><tr><th>Date</th><th>Amount</th><th>Donor</th><th>Message</th></tr></thead>
-            <tbody>
-            @foreach (var d in money)
-            {
-                <tr>
-                    <td>@d.DonationDate.ToString("d MMM yyyy")</td>
-                    <td>R @d.AmountZar.ToString("N0")</td>
-                    <td>@d.DisplayName</td>
-                    <td>@(d.Message ?? "—")</td>
-                </tr>
-            }
-            </tbody>
-        </table>
+<div class="container page-body">
+    <h2 class="section-title mt-5"><span class="icon-chip sand"><i class="bi bi-cash-coin"></i></span>Money <span class="count">@money.Count()</span></h2>
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table">
+                <thead><tr><th>Date</th><th>Amount</th><th>Donor</th><th>Message</th></tr></thead>
+                <tbody>
+                @foreach (var d in money)
+                {
+                    <tr>
+                        <td class="text-nowrap">@d.DonationDate.ToString("d MMM yyyy")</td>
+                        <td class="fw-semibold text-nowrap">R @d.AmountZar.ToString("N0")</td>
+                        <td>@d.DisplayName</td>
+                        <td class="text-muted">@(d.Message ?? "—")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <h2 class="h4 mt-4">Goods</h2>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead><tr><th>Date</th><th>Items</th><th>Category</th><th>Donor</th><th>Description</th></tr></thead>
-            <tbody>
-            @foreach (var d in goods)
-            {
-                <tr>
-                    <td>@d.DonationDate.ToString("d MMM yyyy")</td>
-                    <td>@d.ItemCount</td>
-                    <td>@(d.Category?.Name ?? "Unknown")</td>
-                    <td>@d.DisplayName</td>
-                    <td>@d.Description</td>
-                </tr>
-            }
-            </tbody>
-        </table>
+    <h2 class="section-title"><span class="icon-chip"><i class="bi bi-box-seam"></i></span>Goods <span class="count">@goods.Count()</span></h2>
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table">
+                <thead><tr><th>Date</th><th>Items</th><th>Category</th><th>Donor</th><th>Description</th></tr></thead>
+                <tbody>
+                @foreach (var d in goods)
+                {
+                    <tr>
+                        <td class="text-nowrap">@d.DonationDate.ToString("d MMM yyyy")</td>
+                        <td class="fw-semibold">@d.ItemCount</td>
+                        <td><span class="aid-tag mb-0">@(d.Category?.Name ?? "Unknown")</span></td>
+                        <td>@d.DisplayName</td>
+                        <td class="text-muted">@d.Description</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

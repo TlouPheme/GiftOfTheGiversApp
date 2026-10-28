@@ -4,93 +4,104 @@
     var moneyTab = Model.ActiveTab != "goods";
 }
 
-<div class="container py-4" style="max-width: 760px;">
-    <h1>Make a donation</h1>
-    <p class="text-muted">Give money or goods. You may remain anonymous. Date and amount (or item count) are required so the public totals stay honest.</p>
+<section class="page-hero">
+    <div class="container" style="max-width: 760px;">
+        <span class="gotg-eyebrow"><i class="bi bi-heart-fill"></i>Every gift counts</span>
+        <h1>Make a donation</h1>
+        <p>Give money or goods. You may remain anonymous. Date and amount (or item count) are required so the public totals stay honest.</p>
+    </div>
+</section>
 
-    <ul class="nav nav-pills mb-3">
-        <li class="nav-item">
-            <a class="nav-link @(moneyTab ? "active" : "")" asp-action="Create" asp-route-tab="money">Monetary gift</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link @(!moneyTab ? "active" : "")" asp-action="Create" asp-route-tab="goods">Goods gift</a>
-        </li>
-    </ul>
+<div class="container page-body" style="max-width: 760px;">
+    <div class="segmented">
+        <a class="@(moneyTab ? "active" : "")" asp-action="Create" asp-route-tab="money"><i class="bi bi-cash-coin"></i>Monetary gift</a>
+        <a class="@(!moneyTab ? "active" : "")" asp-action="Create" asp-route-tab="goods"><i class="bi bi-box-seam"></i>Goods gift</a>
+    </div>
 
     @if (moneyTab)
     {
-        <div class="card">
-            <div class="card-body">
-                <h2 class="h5">Monetary donation</h2>
-                <form asp-action="CreateMoney" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="mb-3">
+        <div class="surface-card">
+            <div class="form-section-title">
+                <span class="icon-chip sand"><i class="bi bi-cash-coin"></i></span>
+                <h2>Monetary donation</h2>
+            </div>
+            <form asp-action="CreateMoney" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
                         <label asp-for="Money.DonationDate" class="form-label"></label>
                         <input asp-for="Money.DonationDate" class="form-control" />
                         <span asp-validation-for="Money.DonationDate" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
+                    <div class="col-md-6 mb-3">
                         <label asp-for="Money.AmountZar" class="form-label"></label>
                         <input asp-for="Money.AmountZar" class="form-control" />
                         <span asp-validation-for="Money.AmountZar" class="text-danger"></span>
                     </div>
-                    <div class="form-check mb-3">
-                        <input asp-for="Money.IsAnonymous" class="form-check-input" />
-                        <label asp-for="Money.IsAnonymous" class="form-check-label"></label>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Money.DonorName" class="form-label"></label>
-                        <input asp-for="Money.DonorName" class="form-control" />
-                        <span asp-validation-for="Money.DonorName" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Money.Message" class="form-label"></label>
-                        <textarea asp-for="Money.Message" class="form-control"></textarea>
-                    </div>
+                </div>
+                <div class="form-check mb-3">
+                    <input asp-for="Money.IsAnonymous" class="form-check-input" />
+                    <label asp-for="Money.IsAnonymous" class="form-check-label"></label>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Money.DonorName" class="form-label"></label>
+                    <input asp-for="Money.DonorName" class="form-control" />
+                    <span asp-validation-for="Money.DonorName" class="text-danger"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Money.Message" class="form-label"></label>
+                    <textarea asp-for="Money.Message" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
                     <button type="submit" class="btn btn-gotg">Record monetary donation</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     }
     else
     {
-        <div class="card">
-            <div class="card-body">
-                <h2 class="h5">Goods donation</h2>
-                <form asp-action="CreateGoods" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="mb-3">
+        <div class="surface-card">
+            <div class="form-section-title">
+                <span class="icon-chip"><i class="bi bi-box-seam"></i></span>
+                <h2>Goods donation</h2>
+            </div>
+            <form asp-action="CreateGoods" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
                         <label asp-for="Goods.DonationDate" class="form-label"></label>
                         <input asp-for="Goods.DonationDate" class="form-control" />
                     </div>
-                    <div class="mb-3">
+                    <div class="col-md-6 mb-3">
                         <label asp-for="Goods.ItemCount" class="form-label"></label>
                         <input asp-for="Goods.ItemCount" class="form-control" />
                         <span asp-validation-for="Goods.ItemCount" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
-                        <label asp-for="Goods.CategoryId" class="form-label"></label>
-                        <select asp-for="Goods.CategoryId" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
-                        </select>
-                        <div class="form-text">Clothes and non-perishable food are pre-configured. Staff can add more categories.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Goods.Description" class="form-label"></label>
-                        <textarea asp-for="Goods.Description" class="form-control"></textarea>
-                        <span asp-validation-for="Goods.Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input asp-for="Goods.IsAnonymous" class="form-check-input" />
-                        <label asp-for="Goods.IsAnonymous" class="form-check-label"></label>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Goods.DonorName" class="form-label"></label>
-                        <input asp-for="Goods.DonorName" class="form-control" />
-                        <span asp-validation-for="Goods.DonorName" class="text-danger"></span>
-                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Goods.CategoryId" class="form-label"></label>
+                    <select asp-for="Goods.CategoryId" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                    </select>
+                    <div class="form-text">Clothes and non-perishable food are pre-configured. Staff can add more categories.</div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Goods.Description" class="form-label"></label>
+                    <textarea asp-for="Goods.Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Goods.Description" class="text-danger"></span>
+                </div>
+                <div class="form-check mb-3">
+                    <input asp-for="Goods.IsAnonymous" class="form-check-input" />
+                    <label asp-for="Goods.IsAnonymous" class="form-check-label"></label>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Goods.DonorName" class="form-label"></label>
+                    <input asp-for="Goods.DonorName" class="form-control" />
+                    <span asp-validation-for="Goods.DonorName" class="text-danger"></span>
+                </div>
+                <div class="form-actions">
                     <button type="submit" class="btn btn-gotg">Record goods donation</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     }
 </div>

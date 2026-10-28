@@ -3,45 +3,59 @@
     ViewData["Title"] = "Log a disaster";
 }
 
-<div class="container py-4" style="max-width: 720px;">
-    <h1>Log a disaster</h1>
-    <p class="text-muted">Start date, location and description are required. Leave the end date blank while the response is active.</p>
-    <form asp-action="Create" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="mb-3">
-            <label asp-for="Title" class="form-label"></label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-danger"></span>
+<section class="page-hero">
+    <div class="container" style="max-width: 760px;">
+        <a class="small text-white-50 text-decoration-none d-inline-block mb-3" asp-action="Index"><i class="bi bi-arrow-left me-1"></i>Back to incidents</a>
+        <h1>Log a disaster</h1>
+        <p>Start date, location and description are required. Leave the end date blank while the response is active.</p>
+    </div>
+</section>
+
+<div class="container page-body" style="max-width: 760px;">
+    <div class="surface-card">
+        <div class="form-section-title">
+            <span class="icon-chip rose"><i class="bi bi-broadcast"></i></span>
+            <h2>Incident details</h2>
         </div>
-        <div class="mb-3">
-            <label asp-for="Location" class="form-label"></label>
-            <input asp-for="Location" class="form-control" />
-            <span asp-validation-for="Location" class="text-danger"></span>
-        </div>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label asp-for="StartDate" class="form-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="col-md-6 mb-3">
-                <label asp-for="EndDate" class="form-label"></label>
-                <input asp-for="EndDate" class="form-control" />
+            <div class="mb-3">
+                <label asp-for="Location" class="form-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
             </div>
-        </div>
-        <div class="mb-3">
-            <label asp-for="Description" class="form-label"></label>
-            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="RequiredAid" class="form-label"></label>
-            <input asp-for="RequiredAid" class="form-control" />
-            <div class="form-text">Example: Water, Food parcels, Shelter</div>
-        </div>
-        <button type="submit" class="btn btn-gotg">Save incident</button>
-        <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
-    </form>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="StartDate" class="form-label"></label>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="EndDate" class="form-label"></label>
+                    <input asp-for="EndDate" class="form-control" />
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <label asp-for="RequiredAid" class="form-label"></label>
+                <input asp-for="RequiredAid" class="form-control" />
+                <div class="form-text">Example: Water, Food parcels, Shelter</div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-gotg">Save incident</button>
+                <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 @section Scripts {

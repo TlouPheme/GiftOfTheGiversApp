@@ -3,24 +3,42 @@
     ViewData["Title"] = "Volunteer applications";
 }
 
-<div class="container py-4">
-    <h1>Volunteer applications</h1>
+<section class="page-hero">
+    <div class="container">
+        <a class="small text-white-50 text-decoration-none d-inline-block mb-3" asp-controller="Operations" asp-action="Index"><i class="bi bi-arrow-left me-1"></i>Operations desk</a>
+        <h1>Volunteer applications</h1>
+        <p>Applications waiting for a field call-up.</p>
+    </div>
+</section>
+
+<div class="container page-body">
     @if (!Model.Any())
     {
-        <p class="text-muted">No volunteer applications yet.</p>
+        <div class="empty-state mt-5">No volunteer applications yet.</div>
     }
     else
     {
-        <div class="row g-3">
+        <div class="row g-3 mt-4">
             @foreach (var v in Model)
             {
+                var initials = string.Concat(v.FullName.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(p => p[0]));
                 <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="h6 mb-1">@v.FullName</h2>
-                            <p class="small text-muted mb-2">@v.City · @v.Phone @(string.IsNullOrWhiteSpace(v.Email) ? "" : "· " + v.Email)</p>
-                            <p class="mb-1">@(v.Skills ?? "Skills not listed")</p>
-                            <p class="small text-muted mb-0">Availability: @(v.Availability ?? "Not specified")</p>
+                    <div class="card card-hover h-100">
+                        <div class="card-body d-flex gap-3">
+                            <span class="icon-chip sky fw-bold" style="font-size: .95rem;">@initials</span>
+                            <div class="min-w-0">
+                                <h2 class="h6 mb-1">@v.FullName</h2>
+                                <div class="incident-meta mb-2">
+                                    <span><i class="bi bi-geo-alt"></i>@v.City</span>
+                                    <span><i class="bi bi-telephone"></i>@v.Phone</span>
+                                    @if (!string.IsNullOrWhiteSpace(v.Email))
+                                    {
+                                        <span class="text-break"><i class="bi bi-envelope"></i>@v.Email</span>
+                                    }
+                                </div>
+                                <p class="mb-2">@(v.Skills ?? "Skills not listed")</p>
+                                <span class="aid-tag mb-0"><i class="bi bi-calendar-check me-1"></i>@(v.Availability ?? "Availability not specified")</span>
+                            </div>
                         </div>
                     </div>
                 </div>

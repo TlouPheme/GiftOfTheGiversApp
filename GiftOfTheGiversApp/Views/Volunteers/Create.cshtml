@@ -3,45 +3,55 @@
     ViewData["Title"] = "Volunteer";
 }
 
-<div class="container py-4" style="max-width: 720px;">
-    <h1>Volunteer</h1>
-    <p class="text-muted">Gift of the Givers deploys medical, logistics and community volunteers. This form captures the details operations need before a field call-up.</p>
-    <div class="card">
-        <div class="card-body">
-            <form asp-action="Create" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="mb-3">
-                    <label asp-for="FullName" class="form-label"></label>
-                    <input asp-for="FullName" class="form-control" />
-                    <span asp-validation-for="FullName" class="text-danger"></span>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label asp-for="Phone" class="form-label"></label>
-                        <input asp-for="Phone" class="form-control" />
-                        <span asp-validation-for="Phone" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label asp-for="Email" class="form-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="City" class="form-label"></label>
-                    <input asp-for="City" class="form-control" />
-                    <span asp-validation-for="City" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Skills" class="form-label"></label>
-                    <textarea asp-for="Skills" class="form-control"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Availability" class="form-label"></label>
-                    <input asp-for="Availability" class="form-control" />
-                </div>
-                <button type="submit" class="btn btn-gotg">Submit application</button>
-            </form>
+<section class="page-hero">
+    <div class="container" style="max-width: 760px;">
+        <span class="gotg-eyebrow"><i class="bi bi-people-fill"></i>Join the response</span>
+        <h1>Volunteer</h1>
+        <p>Gift of the Givers deploys medical, logistics and community volunteers. This form captures the details operations need before a field call-up.</p>
+    </div>
+</section>
+
+<div class="container page-body" style="max-width: 760px;">
+    <div class="surface-card">
+        <div class="form-section-title">
+            <span class="icon-chip sky"><i class="bi bi-person-badge"></i></span>
+            <h2>Your details</h2>
         </div>
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="FullName" class="form-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Phone" class="form-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="City" class="form-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Skills" class="form-label"></label>
+                <textarea asp-for="Skills" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="mb-4">
+                <label asp-for="Availability" class="form-label"></label>
+                <input asp-for="Availability" class="form-control" />
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-gotg">Submit application<i class="bi bi-send ms-2"></i></button>
+            </div>
+        </form>
     </div>
 </div>
 

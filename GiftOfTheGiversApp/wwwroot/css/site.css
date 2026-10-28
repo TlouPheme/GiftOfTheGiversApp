@@ -1,14 +1,43 @@
+/* ------------------------------------------------------------------
+   Gift of the Givers — design tokens
+   ------------------------------------------------------------------ */
 :root {
-  --gotg-green: #0b6b3a;
-  --gotg-green-dark: #08492a;
-  --gotg-sand: #d4a017;
-  --gotg-cream: #f6f3ea;
+  --gotg-green: #0b7a43;
+  --gotg-green-dark: #06331f;
+  --gotg-green-deep: #041f13;
+  --gotg-emerald: #12a560;
+  --gotg-mint: #e8f6ee;
+  --gotg-sand: #f2b33d;
+  --gotg-sand-dark: #d4920f;
+  --gotg-cream: #f7f6f1;
+  --gotg-ink: #0f1f17;
+  --gotg-muted: #5b6b62;
+  --gotg-line: rgba(15, 31, 23, 0.08);
+  --gotg-radius: 1.1rem;
+  --gotg-radius-sm: 0.7rem;
+  --gotg-shadow-sm: 0 1px 2px rgba(6, 51, 31, 0.06), 0 2px 8px rgba(6, 51, 31, 0.04);
+  --gotg-shadow: 0 2px 4px rgba(6, 51, 31, 0.04), 0 12px 32px -8px rgba(6, 51, 31, 0.14);
+  --gotg-shadow-lg: 0 24px 60px -16px rgba(6, 51, 31, 0.35);
+
+  --bs-body-font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --bs-body-color: var(--gotg-ink);
+}
+
+/* Bootstrap 5.1 has no per-component CSS variables, so components below
+   are themed with plain properties. */
+a {
+  color: var(--gotg-green);
+}
+
+a:hover {
+  color: var(--gotg-green-dark);
 }
 
 html {
   height: auto;
   min-height: 100%;
   position: static;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -16,6 +45,24 @@ body {
   min-height: 100dvh;
   margin: 0;
   background: var(--gotg-cream);
+  color: var(--gotg-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.display-5, .display-6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-muted {
+  color: var(--gotg-muted) !important;
+}
+
+::selection {
+  background: var(--gotg-sand);
+  color: var(--gotg-green-deep);
 }
 
 /* Full-viewport page shell so the footer sits at the bottom on short pages
@@ -33,56 +80,611 @@ body {
   width: 100%;
 }
 
+/* ------------------------------------------------------------------
+   Navigation
+   ------------------------------------------------------------------ */
+.gotg-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
 .gotg-nav {
-  background: var(--gotg-green-dark);
+  background: rgba(4, 31, 19, 0.82);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
 }
 
-.gotg-hero {
-  background: var(--gotg-green-dark);
+.gotg-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.gotg-brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 0.65rem;
+  background: linear-gradient(135deg, var(--gotg-sand), #f7d27a);
+  color: var(--gotg-green-deep);
+  font-size: 1.05rem;
+  box-shadow: 0 6px 16px -6px rgba(242, 179, 61, 0.7);
+}
+
+.gotg-nav .nav-link {
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 500;
+  font-size: 0.94rem;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem !important;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.gotg-nav .nav-link:hover,
+.gotg-nav .nav-link:focus-visible {
   color: #fff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* Cards inside the dark hero must not inherit white text. */
-.gotg-hero .card {
-  color: #143326;
-  background: #fff;
-}
-
-.gotg-hero .stat-label {
-  color: #3d5c4c;
-}
-
-.gotg-hero .stat-value {
-  color: #08492a;
-}
-
-.gotg-footer {
-  width: 100%;
-  background: var(--gotg-green-dark);
+.gotg-nav .nav-link.active {
   color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.gotg-nav .navbar-toggler {
+  border: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 991.98px) {
+  .gotg-nav .navbar-collapse {
+    padding: 0.75rem 0 0.25rem;
+  }
+
+  .gotg-nav .gotg-nav-actions {
+    margin-top: 0.5rem;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------ */
+.btn {
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.55rem 1.25rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-sm {
+  padding: 0.38rem 0.95rem;
+}
+
+.btn-lg {
+  padding: 0.8rem 1.7rem;
+}
+
+.btn:active {
+  transform: translateY(1px);
 }
 
 .btn-gotg {
-  background: var(--gotg-green);
+  background: linear-gradient(135deg, var(--gotg-emerald), var(--gotg-green));
+  border: 0;
+  color: #fff;
+  box-shadow: 0 8px 20px -10px rgba(11, 122, 67, 0.8);
+}
+
+.btn-gotg:hover,
+.btn-gotg:focus-visible {
+  background: linear-gradient(135deg, var(--gotg-green), var(--gotg-green-dark));
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -10px rgba(11, 122, 67, 0.9);
+}
+
+.btn-warning {
+  color: var(--gotg-green-deep);
+  background-color: var(--gotg-sand);
+  border-color: var(--gotg-sand);
+  box-shadow: 0 8px 22px -10px rgba(242, 179, 61, 0.9);
+}
+
+.btn-warning:hover,
+.btn-warning:focus {
+  color: var(--gotg-green-deep);
+  background-color: #f7c25e;
+  border-color: #f7c25e;
+  transform: translateY(-1px);
+}
+
+.btn-warning:active {
+  background-color: var(--gotg-sand-dark) !important;
+  border-color: var(--gotg-sand-dark) !important;
+}
+
+.btn-outline-success {
+  color: var(--gotg-green);
+  border-color: rgba(11, 122, 67, 0.35);
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:focus {
+  color: #fff;
+  background-color: var(--gotg-green);
   border-color: var(--gotg-green);
-  color: #fff;
 }
 
-.btn-gotg:hover {
-  background: var(--gotg-green-dark);
-  color: #fff;
+.btn-outline-secondary {
+  color: var(--gotg-ink);
+  background: #fff;
+  border-color: rgba(15, 31, 23, 0.14);
 }
 
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  color: var(--gotg-ink);
+  background-color: #ecebe4;
+  border-color: #dcdad1;
+}
+
+.btn-glass {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+}
+
+.btn-glass:hover,
+.btn-glass:focus-visible {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ------------------------------------------------------------------
+   Hero
+   ------------------------------------------------------------------ */
+.gotg-hero {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, rgba(18, 165, 96, 0.45), transparent 60%),
+    radial-gradient(40rem 26rem at -10% 110%, rgba(242, 179, 61, 0.22), transparent 60%),
+    linear-gradient(160deg, var(--gotg-green-dark), var(--gotg-green-deep));
+  margin-top: -4.25rem;
+  padding-top: 8.5rem !important;
+  padding-bottom: 6rem !important;
+}
+
+.gotg-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 85%);
+  pointer-events: none;
+}
+
+.gotg-hero > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.gotg-hero h1 {
+  font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.gotg-hero .hero-accent {
+  background: linear-gradient(90deg, var(--gotg-sand), #ffe2a1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gotg-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffe2a1;
+  background: rgba(242, 179, 61, 0.12);
+  border: 1px solid rgba(242, 179, 61, 0.3);
+  border-radius: 999px;
+}
+
+.gotg-eyebrow .pulse {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--gotg-sand);
+  box-shadow: 0 0 0 0 rgba(242, 179, 61, 0.7);
+  animation: gotg-pulse 2s infinite;
+}
+
+@keyframes gotg-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(242, 179, 61, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(242, 179, 61, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(242, 179, 61, 0); }
+}
+
+.gotg-hero .lead {
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 38rem;
+}
+
+/* Glass totals panel inside the hero. */
+.gotg-glass {
+  color: #fff;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: calc(var(--gotg-radius) + 0.3rem);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: var(--gotg-shadow-lg);
+}
+
+.gotg-glass .stat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.95rem 1rem;
+  border-radius: var(--gotg-radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gotg-glass .stat-row + .stat-row {
+  margin-top: 0.6rem;
+}
+
+.gotg-glass .stat-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.gotg-glass .stat-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.gotg-glass .stat-value small {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.gotg-glass .stat-row .icon-chip {
+  background: rgba(242, 179, 61, 0.16);
+  color: var(--gotg-sand);
+}
+
+/* ------------------------------------------------------------------
+   Page header band used by interior pages
+   ------------------------------------------------------------------ */
+.page-hero {
+  position: relative;
+  color: #fff;
+  background:
+    radial-gradient(40rem 18rem at 90% -20%, rgba(18, 165, 96, 0.4), transparent 60%),
+    linear-gradient(160deg, var(--gotg-green-dark), var(--gotg-green-deep));
+  margin-top: -4.25rem;
+  padding: 7rem 0 3.25rem;
+  overflow: hidden;
+}
+
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+  pointer-events: none;
+}
+
+.page-hero > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.page-hero h1 {
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  margin-bottom: 0.4rem;
+}
+
+.page-hero p {
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 42rem;
+  margin-bottom: 0;
+}
+
+.page-hero .gotg-eyebrow {
+  margin-bottom: 0.9rem;
+}
+
+/* Content that overlaps the bottom of the page header. */
+.page-body {
+  position: relative;
+  z-index: 2;
+  margin-top: -1.75rem;
+  padding-bottom: 4rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.25rem;
+  margin: 2.25rem 0 1rem;
+}
+
+.section-title .count {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--gotg-mint);
+  color: var(--gotg-green);
+  letter-spacing: 0;
+}
+
+/* ------------------------------------------------------------------
+   Cards & surfaces
+   ------------------------------------------------------------------ */
+.card {
+  background: #fff;
+  border-color: var(--gotg-line);
+  border-radius: var(--gotg-radius);
+  box-shadow: var(--gotg-shadow-sm);
+}
+
+.card-body {
+  padding: 1.35rem;
+}
+
+.card-footer {
+  padding: 0.85rem 1.35rem;
+}
+
+.card-footer:last-child {
+  border-radius: 0 0 calc(var(--gotg-radius) - 1px) calc(var(--gotg-radius) - 1px);
+}
+
+.card.shadow-sm,
+.card.shadow {
+  box-shadow: var(--gotg-shadow-sm) !important;
+}
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--gotg-shadow) !important;
+  border-color: rgba(11, 122, 67, 0.2);
+}
+
+.card-footer {
+  border-top-color: var(--gotg-line);
+}
+
+.surface-card {
+  background: #fff;
+  border: 1px solid var(--gotg-line);
+  border-radius: calc(var(--gotg-radius) + 0.2rem);
+  box-shadow: var(--gotg-shadow);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.icon-chip {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.8rem;
+  background: var(--gotg-mint);
+  color: var(--gotg-green);
+  font-size: 1.2rem;
+}
+
+.icon-chip.sand {
+  background: #fdf1d8;
+  color: #a86f00;
+}
+
+.icon-chip.sky {
+  background: #e3f0fb;
+  color: #1d6fb8;
+}
+
+.icon-chip.rose {
+  background: #fce8e6;
+  color: #c0392b;
+}
+
+/* Metric tiles (public totals, operations desk). */
+.metric-card {
+  height: 100%;
+  padding: 1.35rem;
+  background: #fff;
+  border: 1px solid var(--gotg-line);
+  border-radius: var(--gotg-radius);
+  box-shadow: var(--gotg-shadow);
+}
+
+.metric-card .metric-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gotg-muted);
+  margin-top: 0.9rem;
+}
+
+.metric-card .metric-value {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.metric-card .metric-value small {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gotg-muted);
+  letter-spacing: 0;
+}
+
+/* Focus area tiles on the home page. */
+.focus-card {
+  height: 100%;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--gotg-line);
+  border-radius: var(--gotg-radius);
+  box-shadow: var(--gotg-shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.focus-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--gotg-shadow);
+}
+
+.focus-card h3 {
+  font-size: 1.05rem;
+  margin: 1rem 0 0.35rem;
+}
+
+/* Action tiles on the operations desk. */
+.action-tile {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  height: 100%;
+  padding: 1.35rem;
+  color: var(--gotg-ink);
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid var(--gotg-line);
+  border-radius: var(--gotg-radius);
+  box-shadow: var(--gotg-shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.action-tile:hover,
+.action-tile:focus-visible {
+  color: var(--gotg-ink);
+  transform: translateY(-3px);
+  border-color: rgba(11, 122, 67, 0.25);
+  box-shadow: var(--gotg-shadow);
+}
+
+.action-tile h2 {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.action-tile .arrow {
+  margin-left: auto;
+  color: var(--gotg-muted);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.action-tile:hover .arrow {
+  color: var(--gotg-green);
+  transform: translateX(3px);
+}
+
+/* Incident cards. */
+.incident-card .incident-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-size: 0.85rem;
+  color: var(--gotg-muted);
+}
+
+.incident-card .incident-meta i {
+  margin-right: 0.3rem;
+  opacity: 0.8;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+}
+
+.status-pill::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-pill.is-active {
+  color: #0b7a43;
+  background: var(--gotg-mint);
+}
+
+.status-pill.is-closed {
+  color: #6b7280;
+  background: #f0f0ec;
+}
+
+.aid-tag {
+  display: inline-block;
+  margin: 0 0.35rem 0.35rem 0;
+  padding: 0.3em 0.75em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--gotg-green-dark);
+  background: var(--gotg-mint);
+  border: 1px solid rgba(11, 122, 67, 0.14);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Kept for any older markup that still uses it. */
 .stat-box {
-  background: #f3f6f2;
-  border-radius: 0.75rem;
+  background: var(--gotg-mint);
+  border-radius: var(--gotg-radius-sm);
   padding: 0.9rem 1rem;
 }
 
 .incidents-toolbar {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
 }
@@ -98,16 +700,324 @@ body {
   z-index: 1;
 }
 
-.aid-tag {
-  display: inline-block;
-  margin: 0 0.35rem 0.35rem 0;
-  padding: 0.28em 0.7em;
-  font-size: 0.8rem;
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--gotg-muted);
+  background: #fff;
+  border: 1px dashed rgba(15, 31, 23, 0.15);
+  border-radius: var(--gotg-radius);
+}
+
+/* ------------------------------------------------------------------
+   Forms
+   ------------------------------------------------------------------ */
+.form-label {
   font-weight: 600;
-  line-height: 1.25;
-  color: #08492a;
-  background: #e7f3eb;
-  border: 1px solid #9fc5ad;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.form-control,
+.form-select {
+  padding: 0.7rem 0.95rem;
+  border-color: rgba(15, 31, 23, 0.14);
+  border-radius: var(--gotg-radius-sm);
+  background-color: #fbfbf9;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.form-control:hover,
+.form-select:hover {
+  border-color: rgba(15, 31, 23, 0.25);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #fff;
+  border-color: var(--gotg-emerald);
+  box-shadow: 0 0 0 4px rgba(18, 165, 96, 0.15);
+}
+
+.form-check-input {
+  width: 1.15em;
+  height: 1.15em;
+  border-color: rgba(15, 31, 23, 0.25);
+}
+
+.form-check-input:checked {
+  background-color: var(--gotg-green);
+  border-color: var(--gotg-green);
+}
+
+.form-check-input:focus {
+  border-color: var(--gotg-emerald);
+  box-shadow: 0 0 0 4px rgba(18, 165, 96, 0.15);
+}
+
+.form-text {
+  color: var(--gotg-muted);
+}
+
+.form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-section-title h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding-top: 0.5rem;
+}
+
+/* Segmented control for the donation type switcher. */
+.segmented {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  margin-bottom: 1.25rem;
+  background: #fff;
+  border: 1px solid var(--gotg-line);
   border-radius: 999px;
+  box-shadow: var(--gotg-shadow-sm);
+}
+
+.segmented a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.15rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--gotg-muted);
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.segmented a:hover {
+  color: var(--gotg-ink);
+}
+
+.segmented a.active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--gotg-emerald), var(--gotg-green));
+  box-shadow: 0 6px 14px -8px rgba(11, 122, 67, 0.9);
+}
+
+/* ------------------------------------------------------------------
+   Tables
+   ------------------------------------------------------------------ */
+.table-card {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--gotg-line);
+  border-radius: var(--gotg-radius);
+  box-shadow: var(--gotg-shadow-sm);
+}
+
+.table-card .table {
+  margin-bottom: 0;
+  --bs-table-striped-bg: transparent;
+}
+
+.table-card .table > :not(caption) > * > * {
+  padding: 0.9rem 1.15rem;
+  border-bottom-color: var(--gotg-line);
+  vertical-align: middle;
+}
+
+.table-card thead th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gotg-muted);
+  background: #fafaf7;
+}
+
+.table-card tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.table-card tbody tr:hover > * {
+  background: #f6faf7;
+}
+
+.table-card tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+/* ------------------------------------------------------------------
+   Alerts
+   ------------------------------------------------------------------ */
+.gotg-toast {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.15rem;
+  color: var(--gotg-green-dark);
+  background: #fff;
+  border: 1px solid rgba(11, 122, 67, 0.2);
+  border-left: 4px solid var(--gotg-emerald);
+  border-radius: var(--gotg-radius-sm);
+  box-shadow: var(--gotg-shadow);
+}
+
+.gotg-toast i {
+  font-size: 1.2rem;
+  color: var(--gotg-emerald);
+}
+
+.gotg-frame-banner {
+  position: relative;
+  z-index: 1020;
+}
+
+.gotg-frame-banner .container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.75rem;
+}
+
+/* ------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------ */
+.gotg-footer {
+  width: 100%;
+  color: rgba(255, 255, 255, 0.75);
+  background:
+    radial-gradient(40rem 16rem at 100% 0%, rgba(18, 165, 96, 0.18), transparent 60%),
+    var(--gotg-green-deep);
+}
+
+.gotg-footer .footer-heading {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.gotg-footer a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.gotg-footer a:hover {
+  color: var(--gotg-sand);
+}
+
+.gotg-footer .footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ------------------------------------------------------------------
+   Identity (sign-in) pages
+   ------------------------------------------------------------------ */
+.identity-shell {
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
+
+.identity-shell h1 {
+  font-size: 2rem;
+}
+
+.identity-shell form,
+.identity-shell section {
+  background: #fff;
+  border: 1px solid var(--gotg-line);
+  border-radius: calc(var(--gotg-radius) + 0.2rem);
+  box-shadow: var(--gotg-shadow);
+  padding: 1.75rem;
+}
+
+.identity-shell section form,
+.identity-shell form form {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.identity-shell .btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--gotg-emerald), var(--gotg-green));
+  border: 0;
+  box-shadow: 0 8px 20px -10px rgba(11, 122, 67, 0.8);
+}
+
+.identity-shell .btn-primary:hover,
+.identity-shell .btn-primary:focus {
+  background: linear-gradient(135deg, var(--gotg-green), var(--gotg-green-dark));
+}
+
+.identity-shell hr {
+  opacity: 0.08;
+}
+
+.identity-shell h2 {
+  font-size: 1.25rem;
+}
+
+.identity-shell .form-floating > .form-control {
+  height: calc(3.5rem + 2px);
+  padding: 1rem 0.95rem;
+}
+
+.identity-shell .form-floating > .form-control:focus,
+.identity-shell .form-floating > .form-control:not(:placeholder-shown) {
+  padding-top: 1.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.identity-shell .form-floating > label {
+  padding: 1rem 0.95rem;
+  color: var(--gotg-muted);
+}
+
+/* ------------------------------------------------------------------
+   Motion
+   ------------------------------------------------------------------ */
+.fade-up {
+  animation: gotg-fade-up 0.6s ease both;
+}
+
+.fade-up.delay-1 { animation-delay: 0.08s; }
+.fade-up.delay-2 { animation-delay: 0.16s; }
+
+@keyframes gotg-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+
+.gotg-nav .nav-link,
+.gotg-nav .btn,
+.gotg-nav .navbar-text {
   white-space: nowrap;
 }

@@ -1,7 +1,14 @@
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
-<div class="container py-4">
+<section class="page-hero">
+    <div class="container">
+        <span class="gotg-eyebrow"><i class="bi bi-shield-lock"></i>Staff access</span>
+        <h1>Staff account</h1>
+        <p>Authorised staff sign in to log incidents, review gifts and manage goods categories.</p>
+    </div>
+</section>
+<div class="container identity-shell">
     @RenderBody()
 </div>
 @section Scripts {

@@ -5,18 +5,25 @@
         && Model.IsActive
         && User.Identity?.IsAuthenticated == true;
 }
-<div class="card h-100 shadow-sm d-flex flex-column">
+<div class="card incident-card card-hover h-100 d-flex flex-column">
     <div class="card-body flex-grow-1">
-        <div class="d-flex justify-content-between align-items-start gap-2">
-            <h3 class="h5 mb-0 text-break">@Model.Title</h3>
-            <span class="badge flex-shrink-0 @(Model.IsActive ? "bg-success" : "bg-secondary")">@(Model.IsActive ? "Active" : "Closed")</span>
+        <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+            <div class="d-flex gap-3 align-items-start min-w-0">
+                <span class="icon-chip @(Model.IsActive ? "rose" : "")"><i class="bi @(Model.IsActive ? "bi-broadcast" : "bi-archive")"></i></span>
+                <div class="min-w-0">
+                    <h3 class="h5 mb-1 text-break">@Model.Title</h3>
+                    <div class="incident-meta">
+                        <span><i class="bi bi-geo-alt"></i>@Model.Location</span>
+                    </div>
+                </div>
+            </div>
+            <span class="status-pill @(Model.IsActive ? "is-active" : "is-closed")">@(Model.IsActive ? "Active" : "Closed")</span>
         </div>
-        <p class="text-muted small mb-2 mt-2">@Model.Location</p>
-        <p class="small">@Model.Description</p>
-        <p class="small text-muted mb-2">
-            Started @Model.StartDate.ToString("d MMM yyyy")
-            @(Model.EndDate is DateTime end ? $" · Ended {end:d MMM yyyy}" : " · Ongoing")
-        </p>
+        <p class="small text-muted mt-3">@Model.Description</p>
+        <div class="incident-meta mb-3">
+            <span><i class="bi bi-calendar-event"></i>Started @Model.StartDate.ToString("d MMM yyyy")</span>
+            <span><i class="bi bi-clock-history"></i>@(Model.EndDate is DateTime end ? $"Ended {end:d MMM yyyy}" : "Ongoing")</span>
+        </div>
         <div class="d-flex flex-wrap">
             @foreach (var item in aid)
             {
@@ -28,7 +35,7 @@
     {
         <div class="card-footer bg-white">
             <form asp-controller="Incidents" asp-action="Close" asp-route-id="@Model.Id" method="post" class="m-0">
-                <button class="btn btn-sm btn-outline-secondary" type="submit">Close incident</button>
+                <button class="btn btn-sm btn-outline-secondary" type="submit"><i class="bi bi-check2-circle me-1"></i>Close incident</button>
             </form>
         </div>
     }

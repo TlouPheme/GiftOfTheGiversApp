@@ -5,82 +5,99 @@
 
 <section class="gotg-hero py-5">
     <div class="container">
-        <div class="row g-4 align-items-start">
-            <div class="col-lg-7">
-                <p class="text-warning small text-uppercase mb-2">Best among people are those who benefit mankind</p>
-                <h1 class="display-5 fw-semibold">Bring hope and restore dignity when disaster strikes.</h1>
-                <p class="lead fs-6 opacity-75">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-7 fade-up">
+                <span class="gotg-eyebrow mb-4"><span class="pulse"></span>Best among people are those who benefit mankind</span>
+                <h1 class="mt-4 mb-4">Bring hope and <span class="hero-accent">restore dignity</span> when disaster strikes.</h1>
+                <p class="lead fs-6 mb-4">
                     Gift of the Givers is the largest disaster response NGO of African origin on the African continent.
                     This operations desk lets the public give money or goods, register as volunteers, and see exactly
                     what is coming in — while authorised staff capture incidents and new aid categories.
                 </p>
-                <a class="btn btn-warning me-2" asp-controller="Donations" asp-action="Create">Donate now</a>
-                <a class="btn btn-outline-light" asp-controller="Incidents" asp-action="Index">View active incidents</a>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-warning btn-lg" asp-controller="Donations" asp-action="Create"><i class="bi bi-heart-fill me-2"></i>Donate now</a>
+                    <a class="btn btn-glass btn-lg" asp-controller="Incidents" asp-action="Index">View active incidents<i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
             </div>
-            <div class="col-lg-5">
-                <div class="card shadow text-dark">
-                    <div class="card-body">
-                        <h2 class="h5 text-dark">Public incoming totals</h2>
-                        <div class="stat-box mb-2">
-                            <div class="small stat-label">Monetary donations received</div>
-                            <div class="fs-4 fw-semibold stat-value">R @Model.MoneyTotal.ToString("N0")</div>
-                        </div>
-                        <div class="stat-box mb-2">
-                            <div class="small stat-label">Goods items received</div>
-                            <div class="fs-4 fw-semibold stat-value">@Model.GoodsTotal.ToString("N0") items</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="small stat-label">Currently active incidents</div>
-                            <div class="fs-4 fw-semibold stat-value">@Model.ActiveIncidentCount open responses</div>
-                        </div>
-                        <p class="small stat-label mt-3 mb-0">No login required. Anonymous gifts are included in the totals but the donor name is never shown.</p>
+            <div class="col-lg-5 fade-up delay-1">
+                <div class="gotg-glass p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h6 mb-0 text-white">Public incoming totals</h2>
+                        <span class="small" style="color: rgba(255,255,255,.55);"><i class="bi bi-unlock me-1"></i>Open data</span>
                     </div>
+                    <div class="stat-row">
+                        <span class="icon-chip"><i class="bi bi-cash-coin"></i></span>
+                        <div>
+                            <div class="stat-label">Monetary donations received</div>
+                            <div class="stat-value">R @Model.MoneyTotal.ToString("N0")</div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="icon-chip"><i class="bi bi-box-seam"></i></span>
+                        <div>
+                            <div class="stat-label">Goods items received</div>
+                            <div class="stat-value">@Model.GoodsTotal.ToString("N0") <small>items</small></div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="icon-chip"><i class="bi bi-broadcast"></i></span>
+                        <div>
+                            <div class="stat-label">Currently active incidents</div>
+                            <div class="stat-value">@Model.ActiveIncidentCount <small>open responses</small></div>
+                        </div>
+                    </div>
+                    <p class="small mt-3 mb-0" style="color: rgba(255,255,255,.55);">No login required. Anonymous gifts are included in the totals but the donor name is never shown.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="container py-5">
-    <h2 class="h3">Primary focus areas</h2>
-    <p class="text-muted">Every gift is tagged to the work Gift of the Givers already does in South Africa and across 47 countries.</p>
+<section class="container py-5 my-lg-3">
+    <div class="row align-items-end mb-4 g-3">
+        <div class="col-lg-7">
+            <span class="text-uppercase small fw-semibold" style="color: var(--gotg-green); letter-spacing: .06em;">What we do</span>
+            <h2 class="h1 mt-2 mb-2">Primary focus areas</h2>
+            <p class="text-muted mb-0">Every gift is tagged to the work Gift of the Givers already does in South Africa and across 47 countries.</p>
+        </div>
+    </div>
     <div class="row g-3">
         @{
-            var areas = new (string Title, string Text)[]
+            var areas = new (string Title, string Text, string Icon, string Tone)[]
             {
-                ("Disaster response", "Rapid deployment when floods, drought, fire or conflict displace families."),
-                ("Hunger alleviation", "Food parcels and feeding schemes that restore dignity, not just calories."),
-                ("Water provision", "Tankers, boreholes and bottled water where municipal supply has failed."),
-                ("Healthcare", "Clinics, medical supplies and patient support in crisis zones."),
-                ("Education", "Stationery, bursaries and school feeding when a disaster closes classrooms."),
-                ("Human development", "Skills, shelter and long-term recovery after the cameras leave.")
+                ("Disaster response", "Rapid deployment when floods, drought, fire or conflict displace families.", "bi-life-preserver", "rose"),
+                ("Hunger alleviation", "Food parcels and feeding schemes that restore dignity, not just calories.", "bi-basket2", "sand"),
+                ("Water provision", "Tankers, boreholes and bottled water where municipal supply has failed.", "bi-droplet-half", "sky"),
+                ("Healthcare", "Clinics, medical supplies and patient support in crisis zones.", "bi-heart-pulse", "rose"),
+                ("Education", "Stationery, bursaries and school feeding when a disaster closes classrooms.", "bi-mortarboard", "sky"),
+                ("Human development", "Skills, shelter and long-term recovery after the cameras leave.", "bi-people", "")
             };
         }
         @foreach (var area in areas)
         {
             <div class="col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h3 class="h6">@area.Title</h3>
-                        <p class="small text-muted mb-0">@area.Text</p>
-                    </div>
+                <div class="focus-card">
+                    <span class="icon-chip @area.Tone"><i class="bi @area.Icon"></i></span>
+                    <h3>@area.Title</h3>
+                    <p class="small text-muted mb-0">@area.Text</p>
                 </div>
             </div>
         }
     </div>
 </section>
 
-<section class="container pb-5">
-    <div class="d-flex justify-content-between align-items-end mb-3">
+<section class="container pb-5 mb-lg-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
         <div>
-            <h2 class="h3 mb-1">Active incidents</h2>
+            <span class="text-uppercase small fw-semibold" style="color: var(--gotg-green); letter-spacing: .06em;">On the ground</span>
+            <h2 class="h1 mt-2 mb-2">Active incidents</h2>
             <p class="text-muted mb-0">Anyone can see where teams are currently deployed.</p>
         </div>
-        <a class="btn btn-outline-success" asp-controller="Incidents" asp-action="Index">All incidents</a>
+        <a class="btn btn-outline-success" asp-controller="Incidents" asp-action="Index">All incidents<i class="bi bi-arrow-right ms-2"></i></a>
     </div>
     @if (!Model.ActiveIncidents.Any())
     {
-        <p class="text-muted">There are no active incidents on the desk right now.</p>
+        <div class="empty-state">There are no active incidents on the desk right now.</div>
     }
     else
     {
