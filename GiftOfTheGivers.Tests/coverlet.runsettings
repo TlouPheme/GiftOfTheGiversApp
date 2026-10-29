@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code coverage settings: leave generated code out of the figure so it reflects the code we wrote. -->
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat code coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <Include>[GiftOfTheGiversApp]*,[GiftOfTheGivers.Helpers]*</Include>
+          <ExcludeByFile>**/Migrations/*.cs,**/Program.cs,**/Data/DbInitializer.cs,**/Areas/**/*.cs</ExcludeByFile>
+          <ExcludeByAttribute>GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
