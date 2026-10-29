@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace GiftOfTheGivers.Tests
 {
+    [Trait("Category", "Integration")]
     public class DonationFlowIntegrationTests
     {
         [Fact]
@@ -69,6 +70,49 @@ namespace GiftOfTheGivers.Tests
             using var scope = factory.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             Assert.Equal(0, db.MonetaryDonations.Count(d => d.AmountZar == 0));
+        }
+
+        [Fact]
+        public async Task StaffDesk_WhenNotSignedIn_RedirectsToLogin()
+        {
+            // Arrange
+            using var factory = new CustomWebApplicationFactory();
+            var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+            // Act
+            var response = await client.GetAsync("/Operations");
+            // Assert
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+            Assert.Contains("/Identity/Account/Login", response.Headers.Location!.ToString());
+        }
+
+        [Fact]
+        public async Task StaffSignIn_CanOpenOperationsDesk()
+        {
+            // Arrange
+            using var factory = new CustomWebApplicationFactory();
+            var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+
+            // Step 1: open the sign-in page and read the anti-forgery token from it
+            var page = await client.GetStringAsync("/Identity/Account/Login");
+
+            var token = Regex.Match(page, @"<input name=""__RequestVerificationToken"" type=""hidden"" value=""([^""]+)"" />").Groups[1].Value;
+
+            // Step 2 (Act): sign in as the seeded staff user, then open the staff desk
+            var form = new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                { "__RequestVerificationToken", token },
+                { "Input.Email", DbInitializer.StaffEmail },
+                { "Input.Password", DbInitializer.StaffPassword }
+            });
+
+            var login = await client.PostAsync("/Identity/Account/Login", form);
+            var response = await client.GetAsync("/Operations");
+
+            // Step 3 (Assert): sign-in redirected, and the desk now opens instead of redirecting
+            Assert.Equal(HttpStatusCode.Redirect, login.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var desk = await response.Content.ReadAsStringAsync();
+            Assert.Contains("Operations desk", desk);
         }
     }
 }
