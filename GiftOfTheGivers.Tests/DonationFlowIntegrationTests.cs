@@ -6,10 +6,10 @@ using System.Text.RegularExpressions;
 
 namespace GiftOfTheGivers.Tests
 {
-    [Trait("Category", "Integration")]
     public class DonationFlowIntegrationTests
     {
         [Fact]
+        [Trait("Category", "Integration")]
         public async Task MoneyDonation_ThroughForm_SavesAndShowsCertificate()
         {
             // Arrange
