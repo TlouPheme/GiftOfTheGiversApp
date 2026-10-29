@@ -11,10 +11,12 @@ namespace GiftOfTheGiversApp.Controllers;
 public class DonationsController : Controller
 {
     private readonly ApplicationDbContext _db;
+    private readonly IHttpClientFactory _httpClientFactory;
 
-    public DonationsController(ApplicationDbContext db)
+    public DonationsController(ApplicationDbContext db, IHttpClientFactory httpClientFactory)
     {
         _db = db;
+        _httpClientFactory = httpClientFactory;
     }
 
     public async Task<IActionResult> Create(string tab = "money")
@@ -45,16 +47,25 @@ public class DonationsController : Controller
         _db.MonetaryDonations.Add(money);
         await _db.SaveChangesAsync();
         var certificateNumber = DonationHelper.FormatCertificateNumber(money.Id, money.DonationDate);
-        using var http = new HttpClient();
+        var http = _httpClientFactory.CreateClient("TaxCertificate");
         var url =
-            "http://localhost:7264/api/GenerateTaxCertificate" +
+            "api/GenerateTaxCertificate" +
             $"?donationId={money.Id}" +
             $"&amount={money.AmountZar.ToString(System.Globalization.CultureInfo.InvariantCulture)}" +
             $"&donorName={Uri.EscapeDataString(money.DonorName ?? "")}" +
             $"&anonymous={money.IsAnonymous.ToString().ToLowerInvariant()}";
-        var json = await http.GetStringAsync(url);
-        using var doc = System.Text.Json.JsonDocument.Parse(json);
-        certificateNumber = doc.RootElement.GetProperty("certificateNumber").GetString() ?? certificateNumber;
+        try
+        {
+            var json = await http.GetStringAsync(url);
+            using var doc = System.Text.Json.JsonDocument.Parse(json);
+            certificateNumber = doc.RootElement.GetProperty("certificateNumber").GetString() ?? certificateNumber;
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException
+            or System.Text.Json.JsonException or KeyNotFoundException)
+        {
+            // The donation is already saved, so a function outage must not lose it.
+            // Fall back to the locally formatted certificate number.
+        }
         TempData["Status"] = money.IsAnonymous
             ? $"Anonymous monetary donation captured. Thank you. Tax certificate: {certificateNumber}."
             : $"Thank you, {money.DonorName}. Your monetary donation has been captured. Your tax certificate number is {certificateNumber}.";
