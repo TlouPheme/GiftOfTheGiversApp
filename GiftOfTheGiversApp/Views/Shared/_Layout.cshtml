@@ -38,6 +38,7 @@
                             <li class="nav-item"><a class="nav-link @NavActive("Home", "Index")" asp-controller="Home" asp-action="Index">Home</a></li>
                             <li class="nav-item"><a class="nav-link @NavActive("Incidents")" asp-controller="Incidents" asp-action="Index">Incidents</a></li>
                             <li class="nav-item"><a class="nav-link @NavActive("Donations", "Create")" asp-controller="Donations" asp-action="Create">Donate</a></li>
+                            <li class="nav-item"><a class="nav-link @NavActive("Donations", "TaxCertificate")" asp-controller="Donations" asp-action="TaxCertificate">Tax certificates</a></li>
                             <li class="nav-item"><a class="nav-link @NavActive("Volunteers", "Create")" asp-controller="Volunteers" asp-action="Create">Volunteer</a></li>
                             <li class="nav-item"><a class="nav-link @NavActive("Home", "Transparency")" asp-controller="Home" asp-action="Transparency">Public totals</a></li>
                         </ul>
@@ -86,6 +87,7 @@
                         <p class="footer-heading">Public access</p>
                         <a class="d-block mb-1" asp-controller="Home" asp-action="Transparency">Incoming donation totals</a>
                         <a class="d-block mb-1" asp-controller="Incidents" asp-action="Index">Active incidents</a>
+                        <a class="d-block mb-1" asp-controller="Donations" asp-action="TaxCertificate">Tax certificates</a>
                         <a class="d-block" asp-area="Identity" asp-page="/Account/Login">Staff sign-in</a>
                     </div>
                 </div>

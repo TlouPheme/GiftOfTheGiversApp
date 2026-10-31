@@ -1,0 +1,83 @@
+@model TaxCertificateViewModel
+@{
+    ViewData["Title"] = "Tax certificates";
+    var donation = Model.Donation;
+    var zar = System.Globalization.CultureInfo.GetCultureInfo("en-ZA");
+}
+
+<section class="page-hero no-print">
+    <div class="container" style="max-width: 760px;">
+        <span class="gotg-eyebrow"><i class="bi bi-file-earmark-text-fill"></i>Section 18A</span>
+        <h1>Tax certificates</h1>
+        <p>Get the tax certificate for a monetary donation. Enter the certificate number you were given when you donated, and the amount you gave.</p>
+    </div>
+</section>
+
+<div class="container page-body" style="max-width: 760px;">
+    @if (donation is not null)
+    {
+        <div class="surface-card tax-certificate mb-4" aria-label="Tax certificate">
+            <div class="d-flex justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                    <p class="tax-certificate-org mb-1"><i class="bi bi-heart-fill me-2"></i>Gift of the Givers Foundation</p>
+                    <p class="small text-muted mb-0">NPO 032-031 · PBO 930018993</p>
+                </div>
+                <span class="status-pill is-active">Issued</span>
+            </div>
+
+            <h2 class="h4 mb-1">Donation tax certificate</h2>
+            <p class="text-muted small mb-4">Issued in terms of section 18A of the Income Tax Act, 1962</p>
+
+            <dl class="row tax-certificate-details mb-4">
+                <dt class="col-sm-5">Certificate number</dt>
+                <dd class="col-sm-7">@Model.IssuedCertificateNumber</dd>
+                <dt class="col-sm-5">Donor</dt>
+                <dd class="col-sm-7">@donation.DisplayName</dd>
+                <dt class="col-sm-5">Date of donation</dt>
+                <dd class="col-sm-7">@donation.DonationDate.ToString("d MMMM yyyy", zar)</dd>
+                <dt class="col-sm-5">Amount received</dt>
+                <dd class="col-sm-7">@donation.AmountZar.ToString("C", zar)</dd>
+                <dt class="col-sm-5">Nature of donation</dt>
+                <dd class="col-sm-7">Cash (monetary)</dd>
+                <dt class="col-sm-5">Date issued</dt>
+                <dd class="col-sm-7">@Model.IssuedOn.ToString("d MMMM yyyy", zar)</dd>
+            </dl>
+
+            <p class="small text-muted mb-0">The donation was received by Gift of the Givers Foundation, an approved public benefit organisation, and will be used solely for its public benefit activities.</p>
+
+            <div class="form-actions no-print mt-4">
+                <button type="button" class="btn btn-gotg" onclick="window.print()"><i class="bi bi-printer me-1"></i>Print or save as PDF</button>
+            </div>
+        </div>
+    }
+
+    <div class="surface-card no-print">
+        <div class="form-section-title">
+            <span class="icon-chip sand"><i class="bi bi-search"></i></span>
+            <h2>@(donation is null ? "Find your certificate" : "Get another certificate")</h2>
+        </div>
+        <form asp-action="TaxCertificate" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-7 mb-3">
+                    <label asp-for="CertificateNumber" class="form-label"></label>
+                    <input asp-for="CertificateNumber" class="form-control" placeholder="GOTG-2026-000001" autocomplete="off" />
+                    <span asp-validation-for="CertificateNumber" class="text-danger"></span>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label asp-for="AmountZar" class="form-label"></label>
+                    <input asp-for="AmountZar" class="form-control" />
+                    <span asp-validation-for="AmountZar" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-text mb-4">Your certificate number is shown when you make a monetary donation. Goods donations do not get a tax certificate.</div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-gotg">Generate tax certificate</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

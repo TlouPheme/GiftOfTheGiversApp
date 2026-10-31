@@ -26,6 +26,21 @@ public class Program
 
         builder.Services.AddControllersWithViews();
 
+        // The tax certificate function's address and key come from configuration,
+        // so Azure can point at the deployed function app without a code change.
+        builder.Services.AddHttpClient("TaxCertificate", client =>
+        {
+            var function = builder.Configuration.GetSection("TaxCertificateFunction");
+            client.BaseAddress = new Uri(function["BaseUrl"] ?? "http://localhost:7264/");
+            client.Timeout = TimeSpan.FromSeconds(10);
+
+            var key = function["FunctionKey"];
+            if (!string.IsNullOrWhiteSpace(key))
+            {
+                client.DefaultRequestHeaders.Add("x-functions-key", key);
+            }
+        });
+
         var app = builder.Build();
 
         await DbInitializer.SeedAsync(app.Services);
