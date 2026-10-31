@@ -1021,3 +1021,46 @@ h1, h2, h3, h4, h5, h6,
 .gotg-nav .navbar-text {
   white-space: nowrap;
 }
+
+/* ------------------------------------------------------------------
+   Tax certificates
+   ------------------------------------------------------------------ */
+.tax-certificate {
+  border-top: 4px solid var(--gotg-green);
+}
+
+.tax-certificate-org {
+  font-weight: 700;
+  color: var(--gotg-green-dark);
+}
+
+.tax-certificate-details dt {
+  font-weight: 500;
+  color: var(--gotg-muted);
+}
+
+.tax-certificate-details dd {
+  font-weight: 600;
+}
+
+@media print {
+  .gotg-header,
+  .gotg-frame-banner,
+  .gotg-footer,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .page-body {
+    margin-top: 0;
+    padding-bottom: 0;
+  }
+
+  .tax-certificate {
+    box-shadow: none;
+  }
+}

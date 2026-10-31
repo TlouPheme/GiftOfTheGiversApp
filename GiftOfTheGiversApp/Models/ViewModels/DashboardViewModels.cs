@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using GiftOfTheGiversApp.Models;
 
 namespace GiftOfTheGiversApp.Models.ViewModels;
@@ -23,6 +24,20 @@ public class CategoryTotal
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public int ItemCount { get; set; }
+}
+
+public class TaxCertificateViewModel
+{
+    [Required, StringLength(20), Display(Name = "Certificate number")]
+    public string CertificateNumber { get; set; } = string.Empty;
+
+    [Required, Range(1, 100000000), Display(Name = "Amount donated (ZAR)")]
+    public decimal? AmountZar { get; set; }
+
+    // Filled in once the donation has been found.
+    public MonetaryDonation? Donation { get; set; }
+    public string? IssuedCertificateNumber { get; set; }
+    public DateTime IssuedOn { get; set; } = DateTime.Today;
 }
 
 public class DonatePageViewModel

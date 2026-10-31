@@ -2,6 +2,7 @@ using GiftOfTheGivers.Helpers;
 using GiftOfTheGiversApp.Controllers;
 using GiftOfTheGiversApp.Data;
 using GiftOfTheGiversApp.Models;
+using GiftOfTheGiversApp.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -152,6 +153,90 @@ namespace GiftOfTheGivers.Tests
             var expectedCertificate = DonationHelper.FormatCertificateNumber(saved.Id, saved.DonationDate);
             Assert.Contains(expectedCertificate, (string)controller.TempData["Status"]!);
             factory.Verify(f => f.CreateClient("TaxCertificate"), Times.Once);
+        }
+
+        private static Mock<IHttpClientFactory> FunctionDownFactory()
+        {
+            var handler = new FakeHttpMessageHandler(_ => new HttpResponseMessage(HttpStatusCode.InternalServerError));
+            var factory = new Mock<IHttpClientFactory>();
+            factory
+                .Setup(f => f.CreateClient("TaxCertificate"))
+                .Returns(new HttpClient(handler) { BaseAddress = new Uri("http://test/") });
+            return factory;
+        }
+
+        [Fact]
+        public async Task TaxCertificate_WithMatchingNumberAndAmount_ShowsCertificate()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var donation = new MonetaryDonation { AmountZar = 500, DonorName = "Jane Doe", DonationDate = new DateTime(2025, 3, 4) };
+            context.MonetaryDonations.Add(donation);
+            await context.SaveChangesAsync();
+            var controller = CreateController(context, FunctionDownFactory().Object);
+
+            var lookup = new TaxCertificateViewModel
+            {
+                CertificateNumber = DonationHelper.FormatCertificateNumber(donation.Id, donation.DonationDate),
+                AmountZar = 500
+            };
+
+            // Act
+            var result = await controller.TaxCertificate(lookup);
+
+            // Assert
+            var view = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<TaxCertificateViewModel>(view.Model);
+            Assert.Equal(donation.Id, model.Donation!.Id);
+            Assert.Equal(lookup.CertificateNumber, model.IssuedCertificateNumber);
+        }
+
+        [Fact]
+        public async Task TaxCertificate_WithWrongAmount_ShowsErrorAndNoCertificate()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var donation = new MonetaryDonation { AmountZar = 500, IsAnonymous = true, DonationDate = DateTime.Today };
+            context.MonetaryDonations.Add(donation);
+            await context.SaveChangesAsync();
+            var factory = FunctionDownFactory();
+            var controller = CreateController(context, factory.Object);
+
+            var lookup = new TaxCertificateViewModel
+            {
+                CertificateNumber = DonationHelper.FormatCertificateNumber(donation.Id, donation.DonationDate),
+                AmountZar = 499
+            };
+
+            // Act
+            var result = await controller.TaxCertificate(lookup);
+
+            // Assert
+            var view = Assert.IsType<ViewResult>(result);
+            Assert.Null(((TaxCertificateViewModel)view.Model!).Donation);
+            Assert.False(controller.ModelState.IsValid);
+            factory.Verify(f => f.CreateClient("TaxCertificate"), Times.Never);
+        }
+
+        [Theory]
+        [InlineData("GOTG-2026-999999")]
+        [InlineData("GOTG-2026-000000")]
+        [InlineData("not a number")]
+        public async Task TaxCertificate_WithUnknownNumber_ShowsError(string certificateNumber)
+        {
+            // Arrange
+            using var context = CreateContext();
+            var controller = CreateController(context);
+
+            var lookup = new TaxCertificateViewModel { CertificateNumber = certificateNumber, AmountZar = 100 };
+
+            // Act
+            var result = await controller.TaxCertificate(lookup);
+
+            // Assert
+            var view = Assert.IsType<ViewResult>(result);
+            Assert.Null(((TaxCertificateViewModel)view.Model!).Donation);
+            Assert.False(controller.ModelState.IsValid);
         }
     }
 }
